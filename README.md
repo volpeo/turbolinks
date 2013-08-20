@@ -66,10 +66,10 @@ DOM transformations that are idempotent are best. If you have transformations th
 **Progression indicator : ** You can implement a progress indicator like this :
 
 	$(document).on 'page:fetch:progress', (e) ->
-  	progress = e.originalEvent.data
-  	if progress.lengthComputable
-    	percentComplete = parseInt (progress.loaded / progress.total) * 100, 10
-    	console.log percentComplete + '%'
+  		progress = e.originalEvent.data
+  		if progress.lengthComputable
+    			percentComplete = parseInt (progress.loaded / progress.total) * 100, 10
+    			console.log percentComplete + '%'
 
 Initialization
 --------------
