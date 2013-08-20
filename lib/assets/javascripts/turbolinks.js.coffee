@@ -33,6 +33,9 @@ fetchReplacement = (url) ->
     else
       document.location.href = url
 
+  xhr.onprogress = (e) ->
+    triggerEvent 'page:fetch:progress', e
+
   xhr.onloadend = -> xhr = null
   xhr.onabort   = -> rememberCurrentUrl()
   xhr.onerror   = -> document.location.href = url
