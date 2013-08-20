@@ -32,6 +32,7 @@ With Turbolinks pages will change without a full reload, so you can't rely on `D
 ***Load* a fresh version of a page from the server:**
 * `page:before-change` a Turbolinks-enabled link has been clicked *(see below for more details)*
 * `page:fetch` starting to fetch a new target page
+* `page:fetch:progress` the page is fecthing, information about how much bytes are sent is sent
 * `page:receive` the page has been fetched from the server, but not yet parsed
 * `page:change` the page has been parsed and changed to the new version and on DOMContentLoaded
 * `page:update` is triggered whenever page:change is PLUS on jQuery's ajaxSucess, if jQuery is available (otherwise you can manually trigger it when calling XMLHttpRequest in your own code)
@@ -61,6 +62,14 @@ To implement a client-side spinner, you could listen for `page:fetch` to start i
     document.addEventListener("page:receive", stopSpinner);
 
 DOM transformations that are idempotent are best. If you have transformations that are not, hook them to happen only on `page:load` instead of `page:change` (as that would run them again on the cached pages).
+
+**Progression indicator : ** You can implement a progress indicator like this :
+
+	$(document).on 'page:fetch:progress', (e) ->
+  	progress = e.originalEvent.data
+  	if progress.lengthComputable
+    	percentComplete = parseInt (progress.loaded / progress.total) * 100, 10
+    	console.log percentComplete + '%'
 
 Initialization
 --------------
